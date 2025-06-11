@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ad Details</title>
+</head>
+<body>
+    <div id="ad"></div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const adId = urlParams.get('id');
+
+        fetch(`/market/${adId}`)
+            .then(response => response.json())
+            .then(ad => {
+                document.getElementById('ad').innerHTML = `<h1>${ad.name}</h1><img src="${ad.photoUrl}" width="400"><p>Price: ${ad.price}</p><p>${ad.description}</p><p>Submitted: ${ad.submissionTime}</p>`;
+            });
+    </script>
+</body>
+</html>
