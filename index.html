@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>eMarketplace - Home</title>
+</head>
+<body>
+    <h1>All Ads</h1>
+    <div id="ads"></div>
+    <button onclick="previousPage()">Previous</button>
+    <button onclick="nextPage()">Next</button>
+
+    <script>
+        let currentPage = 0;
+
+        function loadAds() {
+            fetch(`/market?page=${currentPage}`)
+                .then(response => response.json())
+                .then(data => {
+                    const adsDiv = document.getElementById('ads');
+                    adsDiv.innerHTML = '';
+                    data.content.forEach(ad => {
+                        adsDiv.innerHTML += `<div><h2>${ad.name}</h2><img src="${ad.photoUrl}" width="200"><p>Price: ${ad.price}</p><a href='item.html?id=${ad.id}'>View Item</a></div><hr>`;
+                    });
+                });
+        }
+
+        function nextPage() {
+            currentPage++;
+            loadAds();
+        }
+
+        function previousPage() {
+            if (currentPage > 0) {
+                currentPage--;
+                loadAds();
+            }
+        }
+
+        loadAds();
+    </script>
+</body>
+</html>
